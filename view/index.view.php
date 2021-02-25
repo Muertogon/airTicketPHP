@@ -15,39 +15,75 @@
         }
         table {
             border: 1px solid black;
+
+        }
+        .container{
+            padding: 2em;
+            border: 2px solid black;
+        }
+        body{
+            padding: 20px;
+        }
+        label{
+            color: firebrick;
         }
     </style>
 </head>
 <body>
+<?php
+    $validation = array();
+    $pastabaBool = !preg_match('/^(\w{1,}\s+){10,100}/', $_POST['pastabos']);
+    $asmenskodasBool = !preg_match('/\d{11}/', $_POST['asmenskodas']);
+    $vardasBool = !preg_match('/\A[A-Z][a-z]{1,100}/', $_POST['vardas']);
+    $pavardeBool = !preg_match('/\A[A-Z][a-z]{1,100}/', $_POST['pavarde']);
+    if ($pastabaBool == True){array_push($validation, "Pastaba turi būti nuo 50 iki 1000 simbolių.");}
+    if ($asmenskodasBool == True){array_push($validation, "Asmens kodą turi sudaryti 11 skaitmenų.");}
+    if ($vardasBool == True){array_push($validation, "Vardas turi prasidėti didžiąją raide.");}
+    if ($pavardeBool == True){array_push($validation, "Pavardė turi prasidėti didžiąją raide.");}
+    if (empty($_POST['BagazoSvoris'])){array_push($validation, "Reikia pasirinkti bagazo svori.");}
+    if (empty($_POST['isvykimoMiestas'])){array_push($validation, "Reikia pasirinkti isvykimo miesta.");}
+    if (empty($_POST['skrydziai'])){array_push($validation, "Reikia pasirinkti skrydzio numeri.");}
+    if (empty($_POST['atvykimoMiestas'])){array_push($validation, "Reikia pasirinkti atvykimo miesta.");}
+
+    foreach ($validation as $erroras) {
+        echo "*" . $erroras . "<br>";
+    }
+    ?>
 
 <div class="container">
-    <form method="post">
+    <form id="myform" method="post">
+        <div class="form-group">
+            <label for="vardas">Vardas</label>
+            <input type="text" class="form-control " placeholder="John" id="vardas" name="vardas" aria-describedby="vardasHelp">
+            <small id="vardasHelp" class="form-text text-muted">Įveskite vardą</small>
+        </div>
+        <div class="form-group">
+            <label for="pavarde">Pavarde</label>
+            <input type="text" class="form-control" placeholder="Smith" id="pavarde" name="pavarde" aria-describedby="pavardeHelp">
+            <small id="pavardeHelp" class="form-text text-muted">Įveskite pavardę</small>
+        </div>
+        <div class="form-group">
+            <label for="asmenskodas">Asmens kodas</label>
+            <input type="number" class="form-control" placeholder="xxxxxxxxxxx" id="asmenskodas" name="asmenskodas" aria-describedby="asmenskodasHelp">
+            <small id="nameHelp" class="form-text text-muted">Įveskite asmens kodą</small>
+        </div>
         <div class="form-group">
             <select class="form-control" name="skrydziai">
-                <option selected disabled>-- Pasirinkite skrydzio numeri --</option>
+                <option selected disabled>-- Skrydzio numerį --</option>
                 <?php foreach ($skrydziai as $nr):?>
                     <option value="<?=$nr;?>"><?=$nr;?></option>
                 <? endforeach;?>
             </select>
-        </div>
-        <div class="form-group">
-            <label for="asmenskodas">Asmens kodas</label>
-            <input type="number" class="form-control" id="asmenskodas" name="asmenskodas" aria-describedby="asmenskodasHelp">
-            <small id="nameHelp" class="form-text text-muted">Įveskite asmens kodą</small>
-        </div>
-        <div class="form-group">
-            <label for="vardaspavarde">Vardas, Pavarde</label>
-            <input type="text" class="form-control" id="vardaspavarde" name="vardaspavarde" aria-describedby="vardaspavardeHelp">
-            <small id="vardaspavardeHelp" class="form-text text-muted">Įveskite varda ir pavardę</small>
+            <small id="skrydidHelp" class="form-text text-muted">Pasirinkite skrydžio numerį</small>
         </div>
         <div class="form-group">
             <select class="form-control" name="isvykimoMiestas">
-                <option selected disabled>-- Išvykimo miestas --</option>
+                <option  selected disabled>-- Išvykimo miestas --</option>
                 <?php foreach ($isMiestai as $miestas):?>
                 <option value="<?=$miestas;?>"><?=$miestas;?></option>
                 <? endforeach;?>
             </select>
-            <small id="isMiestasHelp" class="form-text text-muted">Išvykimo miestas</small>
+            <small id="isMiestasHelp" class="form-text text-muted">Pasirinkite išvykimo miestą</small>
         </div>
         <div class="form-group">
             <select class="form-control" name="atvykimoMiestas">
@@ -56,7 +92,7 @@
                     <option value="<?=$atMiest;?>"><?=$atMiest;?></option>
                 <? endforeach;?>
             </select>
-            <small id="atMiestasHelp" class="form-text text-muted">Atvykimo miestas</small>
+            <small id="atMiestasHelp" class="form-text text-muted">Pasirinkite atvykimo miestą</small>
         </div>
         <div class="form-group">
             <select class="form-control" name="BagazoSvoris">
@@ -65,6 +101,7 @@
                     <option value="<?=$svoris;?>"><?=$svoris;?></option>
                 <?php endforeach;?>
             </select>
+            <small id="atMiestasHelp" class="form-text text-muted">Pasirinkite savo bagazo svori</small>
         </div>
         <div class="form-group">
             <label for="Pastabos">Pastabos</label>
