@@ -1,6 +1,12 @@
 <?php
-?>
 
+if(isset($_POST['send'])){
+    foreach (validate() as $erroras) {
+        echo "*" . $erroras . "<br>";
+    }
+};
+?>
+<!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -30,25 +36,6 @@
     </style>
 </head>
 <body>
-<?php
-    $validation = array();
-    $pastabaBool = !preg_match('/^(\w{1,}\s+){10,100}/', $_POST['pastabos']);
-    $asmenskodasBool = !preg_match('/\d{11}/', $_POST['asmenskodas']);
-    $vardasBool = !preg_match('/\A[A-Z][a-z]{1,100}/', $_POST['vardas']);
-    $pavardeBool = !preg_match('/\A[A-Z][a-z]{1,100}/', $_POST['pavarde']);
-    if ($pastabaBool == True){array_push($validation, "Pastaba turi būti nuo 50 iki 1000 simbolių.");}
-    if ($asmenskodasBool == True){array_push($validation, "Asmens kodą turi sudaryti 11 skaitmenų.");}
-    if ($vardasBool == True){array_push($validation, "Vardas turi prasidėti didžiąją raide.");}
-    if ($pavardeBool == True){array_push($validation, "Pavardė turi prasidėti didžiąją raide.");}
-    if (empty($_POST['BagazoSvoris'])){array_push($validation, "Reikia pasirinkti bagazo svori.");}
-    if (empty($_POST['isvykimoMiestas'])){array_push($validation, "Reikia pasirinkti isvykimo miesta.");}
-    if (empty($_POST['skrydziai'])){array_push($validation, "Reikia pasirinkti skrydzio numeri.");}
-    if (empty($_POST['atvykimoMiestas'])){array_push($validation, "Reikia pasirinkti atvykimo miesta.");}
-
-    foreach ($validation as $erroras) {
-        echo "*" . $erroras . "<br>";
-    }
-    ?>
 
 <div class="container">
     <form id="myform" method="post">
@@ -93,6 +80,11 @@
                 <? endforeach;?>
             </select>
             <small id="atMiestasHelp" class="form-text text-muted">Pasirinkite atvykimo miestą</small>
+        </div>
+        <div class="form-group">
+            <label for="kaina">Iveskite kaina</label>
+            <input type="number" class="form-control" placeholder="xxxx€" id="kaina" name="kaina" aria-describedby="kainaHelp">
+            <small id="kainaHelp" class="form-text text-muted">Įveskite keliones kaina</small>
         </div>
         <div class="form-group">
             <select class="form-control" name="BagazoSvoris">
@@ -146,8 +138,8 @@
     </table>
     <table>
         <?php
-        $iprastaKaina = 100;
-        $kainawitMok = 100+ 30;
+        $iprastaKaina = $_POST['kaina'];
+        $kainawitMok = $_POST['kaina']+ 30;
         echo "<tr>";
             echo "<th>"."<b>"."Keleivio vardas"."</b>"."</th>";
         echo "</tr>";
