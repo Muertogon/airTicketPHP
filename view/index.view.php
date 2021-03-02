@@ -1,8 +1,13 @@
 <?php
-
 if(isset($_POST['send'])){
-    foreach (validate() as $erroras) {
-        echo "*" . $erroras . "<br>";
+    $iprastaKaina = $_POST['kaina'];
+
+    if(empty(validate()) == False){
+        foreach (validate() as $erroras) {
+            echo "*" . $erroras . "<br>";
+        }
+    }else{
+        printData();
     }
 };
 ?>
@@ -24,7 +29,7 @@ if(isset($_POST['send'])){
 
         }
         .container{
-            padding: 2em;
+            padding: 5em;
             border: 2px solid black;
         }
         body{
@@ -32,6 +37,9 @@ if(isset($_POST['send'])){
         }
         label{
             color: firebrick;
+        }
+        .rip, tr, th{
+            border: 1px solid black;
         }
     </style>
 </head>
@@ -59,7 +67,7 @@ if(isset($_POST['send'])){
                 <option selected disabled>-- Skrydzio numerį --</option>
                 <?php foreach ($skrydziai as $nr):?>
                     <option value="<?=$nr;?>"><?=$nr;?></option>
-                <? endforeach;?>
+                <?php endforeach;?>
             </select>
             <small id="skrydidHelp" class="form-text text-muted">Pasirinkite skrydžio numerį</small>
         </div>
@@ -68,7 +76,7 @@ if(isset($_POST['send'])){
                 <option  selected disabled>-- Išvykimo miestas --</option>
                 <?php foreach ($isMiestai as $miestas):?>
                 <option value="<?=$miestas;?>"><?=$miestas;?></option>
-                <? endforeach;?>
+                <?php endforeach;?>
             </select>
             <small id="isMiestasHelp" class="form-text text-muted">Pasirinkite išvykimo miestą</small>
         </div>
@@ -77,7 +85,7 @@ if(isset($_POST['send'])){
                 <option selected disabled>-- Atvykimo miestas --</option>
                 <?php foreach ($atMiestai as $atMiest):?>
                     <option value="<?=$atMiest;?>"><?=$atMiest;?></option>
-                <? endforeach;?>
+                <?php endforeach;?>
             </select>
             <small id="atMiestasHelp" class="form-text text-muted">Pasirinkite atvykimo miestą</small>
         </div>
@@ -102,72 +110,34 @@ if(isset($_POST['send'])){
         <button type="submit" class="btn btn-primary" name="send">Spausdinti</button>
     </form>
     <div class="row">
-        <table>
-
-        </table>
-        <table>
+        <table class="rip">
+            <h3>Skrydziu rezervacijos</h3>
+            <tr>
+                <th>Vardas</th>
+                <th>Pavarde</th>
+                <th>Asmens Kodas</th>
+                <th>Skrydzio numeris</th>
+                <th>Is</th>
+                <th>I</th>
+                <th>Kaina</th>
+                <th>Bagazas</th>
+                <th>Pastaba</th>
+                <th>Bilietas</th>
+            </tr>
             <?php
-            echo "<tr>";
-                echo "<th>"."<b>"."Keleivio vardas"."</b>"."</th>";
-                echo "<th>"."<b>"."Data"."</b>"."</th>";
-                echo "<th>"."<b>"."Laikas"."</b>"."</th>";
-            echo "</tr>";
-            echo "<tr>";
-                 echo "<th>".$_POST["vardaspavarde"]."</th>";
-                echo "<th>".date("F jS")."</th>";
-                echo "<th>".date("h:i:s")."</th>";
-            echo "</tr>";
-            echo "<tr>";
-                echo "<th>"."<b>"."Iš"."</b>"."</th>";
-                echo "<th>"."<b>"."Skrydis"."</b>"."</th>";
-                echo "<th>"."<b>"."Vieta"."</b>"."</th>";
-            echo "</tr>";
-            echo "<tr>";
-                echo "<th>".$_POST["isvykimoMiestas"]."</th>";
-                echo "<th>".$_POST["skrydziai"]."</th>";
-                echo "<th>".rand(20, 43)."</th>";
-            echo "</tr>";
-            echo "<tr>";
-                echo "<th>"."<b>"."I"."</b>"."</th>";
-                echo "<th>"."<b>"."Vartai"."</b>"."</th>";
-                echo "<th>"."<b>"."Sėsti iki"."</b>"."</th>";
-            echo "</tr>";
-            echo "<tr>";
-                echo "<th>".$_POST["atvykimoMiestas"]."</th>";
-                echo "<th>".rand(1, 3)."</th>";
-                echo "<th>"."..."."</th>";
-            echo "</tr>";
-            ?>
-        </table>
-        <table>
-            <?php
-            $iprastaKaina = $_POST['kaina'];
-            $kainawitMok = $_POST['kaina']+ 30;
-            echo "<tr>";
-                echo "<th>"."<b>"."Keleivio vardas"."</b>"."</th>";
-            echo "</tr>";
-            echo "<tr>";
-                echo "<th>".$_POST["vardaspavarde"]."</th>";
-            echo "</tr>";
-            echo "<tr>";
-                echo "<th>"."<b>"."Kelionės maršrutas"."</b>"."</th>";
-            echo "</tr>";
-            echo "<tr>";
-                echo "<th>".$_POST["isvykimoMiestas"]."--------->".$_POST["atvykimoMiestas"]."</th>";
-            echo "</tr>";
-            echo "<tr>";
-                echo "<th>"."<b>"."Kaina (Įskaitant bagažo mokestį)"."</b>"."</th>";
-            echo "</tr>";
-            echo "<tr>";
-                if ($_POST['BagazoSvoris'] == '20kg<..'){
-                    echo "<th>".$kainawitMok."€"."</th>";
-                }else{
-                    echo "<th>".$iprastaKaina."€"."</th>";
+                $tableItems = getData();
+                $tableItems = array_chunk($tableItems, 9);
+                foreach ($tableItems as $data){
+                    echo '<tr>';
+                    foreach ($data as $rezervacija){
+                        echo '<th>'.$rezervacija.'</th>';
+                    }
+                    echo '<th>'.'<a href="inc/ticket.php">Pasiziureti</a>'.'</th>';
+                    echo '</tr>';
                 }
-
-            echo "</tr>";
-            ?>
+                ?>
         </table>
+
     </div>
 </body>
 </html>

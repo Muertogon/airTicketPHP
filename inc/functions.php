@@ -6,7 +6,7 @@ function validate(){
     $vardasBool = !preg_match('/\A[A-Z][a-z]{1,100}/', $_POST['vardas']);
     $pavardeBool = !preg_match('/\A[A-Z][a-z]{1,100}/', $_POST['pavarde']);
 
-    if ($pastabaBool == True){array_push($validation, "Pastaba turi būti nuo 50 iki 1000 simbolių.");}
+    if ($pastabaBool == True){array_push($validation, "Pastaba turi būti nuo 10 iki 100 zodziu.");}
     if ($asmenskodasBool == True){array_push($validation, "Asmens kodą turi sudaryti 11 skaitmenų.");}
     if ($vardasBool == True){array_push($validation, "Vardas turi prasidėti didžiąją raide.");}
     if ($pavardeBool == True){array_push($validation, "Pavardė turi prasidėti didžiąją raide.");}
@@ -19,13 +19,22 @@ function validate(){
 }
 
 
-function printData($data){
-    $data = "data/zinutes.txt"; //kelias i faila
-    $content = file_get_contents($data); //nuskaitom tekstini faila
-    $formData = implode(', ',$_POST);
-    $content.= $formData."/n";
+function printData(){
+    $data = 'data/zinutes.txt';
+    $content = file_get_contents($data);
+    $formData = implode(',',$_POST);
+    if ($content != ''){$content.= ',';}
+    $content.="\n".substr($formData, 0, -1);
     file_put_contents($data, $content);
-    $messages = file_get_contents($data, true);
-    $messages = explode('/n', $messages);
-    var_dump($messages);
+}
+
+function getData(){
+    $data='data/zinutes.txt';
+
+    $rezervacija = file_get_contents($data, true);
+    $rezervacija = explode(',', $rezervacija);
+    $linkas = (array)$rezervacija;
+
+    return $linkas;
+
 }
