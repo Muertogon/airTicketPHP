@@ -1,4 +1,14 @@
 <?php
+function getYes(){
+    $data='data/zinutes.txt';
+
+    $rezervacija = file_get_contents($data, true);
+    $rezervacija = explode(',', $rezervacija);
+    $linkas = (array)$rezervacija;
+
+    return $linkas;
+
+}
 function validate(){
     $validation= array();
     $pastabaBool = !preg_match('/^(\w{1,}\s+){10,100}/', $_POST['pastabos']);
@@ -26,15 +36,4 @@ function printData(){
     if ($content != ''){$content.= ',';}
     $content.="\n".substr($formData, 0, -1);
     file_put_contents($data, $content);
-}
-
-function getData(){
-    $data='data/zinutes.txt';
-
-    $rezervacija = file_get_contents($data, true);
-    $rezervacija = explode(',', $rezervacija);
-    $linkas = (array)$rezervacija;
-
-    return $linkas;
-
 }

@@ -9,7 +9,7 @@ if(isset($_POST['send'])){
     }else{
         printData();
     }
-};
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -125,14 +125,21 @@ if(isset($_POST['send'])){
                 <th>Bilietas</th>
             </tr>
             <?php
-                $tableItems = getData();
+                $tableItems = getYes();
+
                 $tableItems = array_chunk($tableItems, 9);
+
                 foreach ($tableItems as $data){
                     echo '<tr>';
+                    echo "<form action='./ticket.php' method='post'>";
+                    $i = 0;
                     foreach ($data as $rezervacija){
+                        echo '<input type="hidden" name="'.$i.'" value="'.$rezervacija.'">';
                         echo '<th>'.$rezervacija.'</th>';
+                        $i++;
                     }
-                    echo '<th>'.'<a href="inc/ticket.php">Pasiziureti</a>'.'</th>';
+                    echo '<th>'.'<button type="submit">Perziureti Bilieta</button> '.'</th>';
+                    echo '</form>';
                     echo '</tr>';
                 }
                 ?>

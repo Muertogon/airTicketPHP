@@ -1,8 +1,5 @@
 
-Hello,Me,50107162161,15,Vilnius,London,3,<5kg,d d d d d d d d d d d d,
-Freak,Cerer,50107162161,15,Palanga,London,6546,10kg,d d d d d d d d d d d d d,
-Freak,Cerer,50107162161,15,Palanga,London,6546,10kg,d d d d d d d d d d d d d,
-Freak,Cerer,50107162161,15,Palanga,London,6546,10kg,d d d d d d d d d d d d d,
-Freak,Cerer,50107162161,15,Palanga,London,6546,10kg,d d d d d d d d d d d d d,
-Freak,Cerer,50107162161,15,Palanga,London,6546,10kg,d d d d d d d d d d d d d,
-Freak,Cerer,50107162161,15,Palanga,London,6546,10kg,d d d d d d d d d d d d d
+George,Smith,54215894560,23,Palanga,Moscow,55,20kg<..,no pls dont do this to me and my family ok,
+George,Smith,54215894560,23,Palanga,Moscow,55,20kg<..,no pls dont do this to me and my family ok,
+George,Smith,54215894560,23,Palanga,Moscow,55,20kg<..,no pls dont do this to me and my family ok,
+George,Smith,54215894560,23,Palanga,Moscow,55,20kg<..,no pls dont do this to me and my family ok
