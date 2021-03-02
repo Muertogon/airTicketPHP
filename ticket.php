@@ -54,7 +54,6 @@ $skrydzioData = ($_POST);
         <tr>
             <th><b>I</b></th>
             <th><b>Pastaba</b></th>
-
         </tr>
         <tr>
             <th><?= $skrydzioData[5];?></th>
